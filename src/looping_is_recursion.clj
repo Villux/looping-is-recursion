@@ -29,8 +29,8 @@
   (loop [i 0
          loop-seq a-seq]
     (cond
+     (empty? loop-seq) nil
      (pred (first loop-seq)) i
-     (empty? (rest loop-seq)) nil
      :else (recur (inc i) (rest loop-seq)))))
 
 (defn avg [a-seq]
@@ -43,11 +43,27 @@
 
 
 (defn parity [a-seq]
-  ":(")
+  (let [odd-seq (filter #(not (= 0 (mod (get % 1) 2))) (frequencies a-seq))]
+    (set (keys odd-seq))))
+
 
 (defn fast-fibo [n]
-  ":(")
+  (loop [fib1 0
+         fib2 1
+         n n]
+    (if (= n 0)
+      fib1
+     (recur fib2 (+ fib1 fib2) (dec n)))))
+
+(conj [1 2 3] 2)
+
+
 
 (defn cut-at-repetition [a-seq]
-  [":("])
+  (loop [a-seq a-seq result []]
+    (if
+      (or (empty? a-seq) (some #(= % (first a-seq)) result))
+          result
+          (recur (rest a-seq) (conj result (first a-seq))))))
+
 
